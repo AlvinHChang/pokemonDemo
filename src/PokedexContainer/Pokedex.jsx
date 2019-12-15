@@ -15,9 +15,9 @@ export default class Pokedex extends Component {
   componentDidMount() {
     const fullPokedexUrl = 'https://pokeapi.co/api/v2/pokedex/1';
     axios.get(fullPokedexUrl).then(({ data }) => {
-      const { pokemon_entries } = data;
-      // eslint-disable-next-line camelcase
-      const pokedexEntries = pokemon_entries.map(({ entry_number, pokemon_species }) => ({ entryNumber: entry_number, pokemonSpecies: pokemon_species.name }));
+      const { pokemon_entries: pokemonEntries } = data;
+      // eslint-disable-next-line max-len
+      const pokedexEntries = pokemonEntries.map(({ entry_number: entryNumber, pokemon_species: pokemon }) => ({ entryNumber, pokemonSpecies: pokemon.name }));
       this.setState({
         pokedexEntries,
         isLoading: false,

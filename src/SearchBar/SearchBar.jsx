@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -29,13 +30,9 @@ export default class SearchBar extends Component {
     let filteredEntry = [];
     if (filteredInputValue.length > prevFilteredInputValue.length
       && filteredInputValue.startsWith(prevFilteredInputValue)) {
-      filteredEntry = prevFilteredEntry.filter(({ pokemonSpecies }) => {
-        return pokemonSpecies.startsWith(filteredInputValue);
-      });
+      filteredEntry = prevFilteredEntry.filter(({ pokemonSpecies }) => pokemonSpecies.startsWith(filteredInputValue));
     } else {
-      filteredEntry = pokedexEntries.filter(({ pokemonSpecies }) => {
-        return pokemonSpecies.startsWith(filteredInputValue);
-      });
+      filteredEntry = pokedexEntries.filter(({ pokemonSpecies }) => pokemonSpecies.startsWith(filteredInputValue));
     }
     this.setState({
       filteredInputValue,
