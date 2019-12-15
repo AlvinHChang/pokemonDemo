@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './SearchBar.css';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -29,14 +29,12 @@ export default class SearchBar extends Component {
     let filteredEntry = [];
     if (filteredInputValue.length > prevFilteredInputValue.length
       && filteredInputValue.startsWith(prevFilteredInputValue)) {
-      filteredEntry = prevFilteredEntry.filter(({ pokemon_species }) => {
-        const { name } = pokemon_species;
-        return name.startsWith(filteredInputValue);
+      filteredEntry = prevFilteredEntry.filter(({ pokemonSpecies }) => {
+        return pokemonSpecies.startsWith(filteredInputValue);
       });
     } else {
-      filteredEntry = pokedexEntries.filter(({ pokemon_species }) => {
-        const { name } = pokemon_species;
-        return name.startsWith(filteredInputValue);
+      filteredEntry = pokedexEntries.filter(({ pokemonSpecies }) => {
+        return pokemonSpecies.startsWith(filteredInputValue);
       });
     }
     this.setState({
@@ -52,15 +50,22 @@ export default class SearchBar extends Component {
     return (
       <List>
         <TextField onChange={this.handleOnChange} />
-        {filteredEntry.map(({ entry_number, pokemon_species }) => (
-          <ListItem key={entry_number} button>
+        {filteredEntry.map(({ entryNumber, pokemonSpecies }) => (
+          <ListItem key={entryNumber} button>
             <ListItemAvatar>
-              <Avatar src={SearchBar.getPokemonSpriteUrl(entry_number)} />
+              <Avatar src={SearchBar.getPokemonSpriteUrl(entryNumber)} />
             </ListItemAvatar>
-            <ListItemText primary={pokemon_species.name} />
+            <ListItemText primary={pokemonSpecies} />
           </ListItem>
         ))}
       </List>
     );
   }
 }
+
+SearchBar.propTypes = {
+  pokedexEntries: PropTypes.arrayOf({
+    entryNumber: PropTypes.number,
+    pokemonSpecies: PropTypes.string,
+  }).isRequired,
+};
